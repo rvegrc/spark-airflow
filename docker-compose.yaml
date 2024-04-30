@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  spark:
+    build: .
+    ports:
+      - "8002:19888" 
+    volumes:
+      - D:/zet/obs-h/Projects_od/spark/files:/files 
