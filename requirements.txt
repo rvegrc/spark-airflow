@@ -1,2 +1,3 @@
 findspark
 jupyter
+python-dotenv
