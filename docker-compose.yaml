@@ -5,4 +5,4 @@ services:
     ports:
       - "8002:19888" 
     volumes:
-      - D:/zet/obs-h/Projects_od/spark/files:/files 
+      - /home/pmu/projects/spark/files:/files 
