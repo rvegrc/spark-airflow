@@ -1,0 +1,25 @@
+findspark
+jupyter
+python-dotenv==1.0.1
+# requirements for project
+pandas==2.2.3
+pydantic==2.5.3
+seaborn==0.12.2 
+matplotlib
+# xgboost==2.1.1
+# sklearn was without version and 1.7 installed
+scikit-learn==1.5.2
+fastapi==0.110.1
+uvicorn==0.29.0
+optuna==3.6.0
+mlflow==2.12.2
+openpyxl==3.1.2
+phik==0.12.4
+# beautifulsoup4==4.12.2
+# selenium==4.21.0
+xlrd==2.0.1
+# catboost==1.2.7
+category-encoders
+missingno==0.5.2
+clickhouse-connect==0.8.0
+# lightgbm==4.5.0

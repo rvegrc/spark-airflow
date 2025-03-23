@@ -1,0 +1,15 @@
+# airflow-clickhouse-plugin
+# airflow-clickhouse-plugin[common.sql]
+# clickhouse-cityhash 
+# lz4
+# apache-airflow-providers-apache-spark==4.11.3
+# apache-airflow-providers-common-compat==1.2.2
+# # install for send command and connect to external spark
+# findspark
+
+airflow-clickhouse-plugin
+airflow-clickhouse-plugin[common.sql]
+clickhouse-cityhash 
+lz4
+apache-airflow-providers-apache-spark==4.11.3
+apache-airflow-providers-common-compat==1.2.2

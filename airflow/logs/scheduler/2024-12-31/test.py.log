@@ -1,0 +1,105 @@
+[2024-12-31T11:41:54.737+0000] {processor.py:186} INFO - Started process (PID=67) to work on /opt/airflow/dags/test.py
+[2024-12-31T11:41:54.740+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T11:41:54.745+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:41:54.744+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T11:41:55.042+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:41:55.037+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T11:41:55.052+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T11:41:55.093+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:41:55.092+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T11:41:55.116+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:41:55.116+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T11:41:55.160+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.432 seconds
+[2024-12-31T11:42:25.615+0000] {processor.py:186} INFO - Started process (PID=76) to work on /opt/airflow/dags/test.py
+[2024-12-31T11:42:25.617+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T11:42:25.619+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:42:25.618+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T11:42:25.794+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:42:25.793+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T11:42:25.796+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T11:42:25.820+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:42:25.820+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T11:42:25.833+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:42:25.832+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T11:42:26.013+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.407 seconds
+[2024-12-31T11:44:26.043+0000] {processor.py:186} INFO - Started process (PID=68) to work on /opt/airflow/dags/test.py
+[2024-12-31T11:44:26.045+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T11:44:26.049+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:26.049+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T11:44:26.328+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:26.327+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T11:44:26.334+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T11:44:26.379+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:26.379+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T11:44:26.402+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:26.401+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T11:44:26.446+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.412 seconds
+[2024-12-31T11:44:56.904+0000] {processor.py:186} INFO - Started process (PID=77) to work on /opt/airflow/dags/test.py
+[2024-12-31T11:44:56.904+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T11:44:56.907+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:56.907+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T11:44:57.253+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:57.252+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T11:44:57.256+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T11:44:57.339+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:57.338+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T11:44:57.375+0000] {logging_mixin.py:190} INFO - [2024-12-31T11:44:57.374+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T11:44:57.788+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.890 seconds
+[2024-12-31T14:06:55.885+0000] {processor.py:186} INFO - Started process (PID=84) to work on /opt/airflow/dags/test.py
+[2024-12-31T14:06:55.947+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T14:06:55.954+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:06:55.953+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T14:06:56.391+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:06:56.388+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T14:06:56.400+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T14:06:56.459+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:06:56.458+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T14:06:56.490+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:06:56.489+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T14:06:57.038+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 1.165 seconds
+[2024-12-31T14:07:27.631+0000] {processor.py:186} INFO - Started process (PID=93) to work on /opt/airflow/dags/test.py
+[2024-12-31T14:07:27.632+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T14:07:27.634+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:27.634+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T14:07:27.829+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:27.828+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T14:07:27.832+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T14:07:27.856+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:27.856+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T14:07:27.902+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:27.902+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T14:07:27.925+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.300 seconds
+[2024-12-31T14:07:57.996+0000] {processor.py:186} INFO - Started process (PID=104) to work on /opt/airflow/dags/test.py
+[2024-12-31T14:07:57.998+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-31T14:07:58.000+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:58.000+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-31T14:07:58.209+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:58.208+0000] {templater.py:94} ERROR - Failed to resolve template field '_sql'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/template/templater.py", line 92, in resolve_template_files
+    setattr(self, field, env.loader.get_source(env, content)[0])  # type: ignore
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py", line 207, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: test.sql
+[2024-12-31T14:07:58.212+0000] {processor.py:925} INFO - DAG(s) 'test' retrieved from /opt/airflow/dags/test.py
+[2024-12-31T14:07:58.239+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:58.238+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-31T14:07:58.254+0000] {logging_mixin.py:190} INFO - [2024-12-31T14:07:58.254+0000] {dag.py:4180} INFO - Setting next_dagrun for test to None, run_after=None
+[2024-12-31T14:07:58.281+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.290 seconds
