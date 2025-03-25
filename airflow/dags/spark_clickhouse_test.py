@@ -7,11 +7,12 @@ from airflow.decorators import dag, task
 from pyspark.sql import SparkSession
 from pyspark import SparkContext
 import pandas as pd
-# from sedona.spark import SedonaContext
 import os
+import clickhouse_connect
 
 CLICKHOUSE_CONN_ID = 'clickhouse'
 SPARK_CONN_ID = 'spark'
+ROOT_PATH = '/opt/airflow/airflow_data'
 
 CH_IP = os.getenv('CH_IP')
 CH_USER = os.getenv('CH_USER')
@@ -75,10 +76,11 @@ def spark_clickhouse_test():
     #     verbose=True
     # )
     
-    clickhouse_test_conn = ClickHouseOperatorExtended(
+    # test ClickHouseOperatorExtended
+    naitive_test_conn = ClickHouseOperatorExtended(
         task_id='clickhouse_test_conn',
         clickhouse_conn_id=CLICKHOUSE_CONN_ID,
-        sql='test.sql'
+        sql='test.sql' # find in dag template_searchpath
     )
 
 
@@ -100,10 +102,11 @@ def spark_clickhouse_test():
 
     @task.pyspark(
             conn_id=SPARK_CONN_ID
-            ,config_kwargs={'spark.jars.packages':','.join(packages)}
+            ,config_kwargs={'spark.jars.packages':','.join(packages)} # for use in spark in code and lazy execution
         )
-    def run(spark: SparkSession, sc: SparkContext):
+    def pyspark_pyconnect_test(spark: SparkSession, sc: SparkContext):
 
+        # if you want to use spark with coding in it
         appName = "Connect To ClickHouse via PySpark"
         spark = (SparkSession.builder
                 .appName(appName)
@@ -127,27 +130,45 @@ def spark_clickhouse_test():
                 .getOrCreate()
                 )       
 
-
-
-        # config = (
-        #     SedonaContext.builder()
-        #     .config('spark.jars.repositories', 'https://artifacts.unidata.ucar.edu/repository/unidata-all')
-        #     .config("spark.sql.catalog.clickhouse", "com.clickhouse.spark.ClickHouseCatalog")
-        #     .config("spark.sql.catalog.clickhouse.host", CH_IP)
-        #     .config("spark.sql.catalog.clickhouse.protocol", "http")
-        #     .config("spark.sql.catalog.clickhouse.http_port", "8123")
-        #     .config("spark.sql.catalog.clickhouse.user", CH_USER)
-        #     .config("spark.sql.catalog.clickhouse.password", CH_PASS) 
-        #     .config("spark.sql.catalog.clickhouse.database", "default")
-        #     #.config("spark.clickhouse.write.format", "json")
-        #     .getOrCreate()
-        # )
-        # spark = SedonaContext.create(config)
-        # sc = spark.sparkContext
         spark.sql("use clickhouse")
+      
+        # create tmp dataframe and test access to path
+        data = [("Alice", 1), ("Bob", 2), ("Charlie", 3)]
+        df = pd.DataFrame(data, columns=["Name", "Value"])
+        df.to_csv(f'{ROOT_PATH}/tmp/test_file.csv',index=False)
+        df = pd.read_csv(f'{ROOT_PATH}/tmp/test_file.csv')  
+
+        # test clickhouse_connect
+
+        client = clickhouse_connect.get_client(host=CH_IP, port=8123, username=CH_USER, password=CH_PASS)
+        # create table
+        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (Name String, Value Int32) order by Name ENGINE = MergeTree()")
+        # insert data
+        client.insert_df("tmp.spark_test", df)
+        # select data
+        result = client.query_df("SELECT * FROM tmp.spark_test")
+        print(result)
+        # drop table
+        client.command("DROP TABLE IF EXISTS tmp.spark_test")
+
+        # test spark
+
+        dfs = spark.read.csv(f'{ROOT_PATH}/tmp/test_file.csv', header=True)
+        # upload df to clickhouse
+        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (Name String, Value Int32) order by Name ENGINE = MergeTree()")
+        # insert data
+        df.writeTo("tmp.spark_test").append()
+        # test select
+        dfs = spark.sql("select * from tmp.spark_test")
+        # test access to path
+        dfs.write.csv(f'{ROOT_PATH}/tmp/test_file_spark', overwrite=True)
+        dfs = spark.read.csv(f'{ROOT_PATH}/tmp/test_file_spark', header=True)
+        dfs.show()
+        # drop table
+        client.command("DROP TABLE IF EXISTS tmp.spark_test")
 
 
-    clickhouse_test_conn >> run()
+    naitive_test_conn >> pyspark_pyconnect_test()
 
 spark_clickhouse_test()
 

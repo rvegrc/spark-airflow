@@ -110,8 +110,6 @@ services:
       - "4040:4040"
     volumes:
       - ..:/opt/airflow/airflow_data
-      - /home/pmu/projects/ycup:/home/pmu/projects/ycup
-      - /home/pmu/projects/tools:/home/pmu/projects/tools
     # add same user as in airflow to avoid permission issues
     user: "${AIRFLOW_UID:-50000}:0"
     networks:
