@@ -134,7 +134,7 @@ def spark_clickhouse_test():
       
         # create tmp dataframe and test access to path
         data = [("Alice", 1), ("Bob", 2), ("Charlie", 3)]
-        df = pd.DataFrame(data, columns=["Name", "Value"])
+        df = pd.DataFrame(data, columns=["name", "value"])
         df.to_csv(f'{ROOT_PATH}/tmp/test_file.csv',index=False)
         df = pd.read_csv(f'{ROOT_PATH}/tmp/test_file.csv')  
 
@@ -142,7 +142,7 @@ def spark_clickhouse_test():
 
         client = clickhouse_connect.get_client(host=CH_IP, port=8123, username=CH_USER, password=CH_PASS)
         # create table
-        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (Name String, Value Int32) order by Name ENGINE = MergeTree()")
+        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (name String, value Int32) ENGINE = MergeTree() order by name")
         # insert data
         client.insert_df("tmp.spark_test", df)
         # select data
@@ -155,13 +155,13 @@ def spark_clickhouse_test():
 
         dfs = spark.read.csv(f'{ROOT_PATH}/tmp/test_file.csv', header=True)
         # upload df to clickhouse
-        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (Name String, Value Int32) order by Name ENGINE = MergeTree()")
+        client.command("CREATE TABLE IF NOT EXISTS tmp.spark_test (name String, value Int32) ENGINE = MergeTree() order by name")
         # insert data
-        df.writeTo("tmp.spark_test").append()
+        dfs.writeTo("tmp.spark_test").append()
         # test select
         dfs = spark.sql("select * from tmp.spark_test")
         # test access to path
-        dfs.write.csv(f'{ROOT_PATH}/tmp/test_file_spark', overwrite=True)
+        dfs.write.csv(f'{ROOT_PATH}/tmp/test_file_spark', mode='overwrite')
         dfs = spark.read.csv(f'{ROOT_PATH}/tmp/test_file_spark', header=True)
         dfs.show()
         # drop table
