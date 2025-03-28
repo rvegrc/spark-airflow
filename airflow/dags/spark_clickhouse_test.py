@@ -19,7 +19,6 @@ CH_USER = os.getenv('CH_USER')
 CH_PASS = os.getenv('CH_PASS')
 
 
-
 default_args={
     "owner": "rvegrc",
     "depends_on_past": False,

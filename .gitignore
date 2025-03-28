@@ -2,3 +2,4 @@ files/
 .env
 .vscode/
 *logs/
+*__pycache__/
