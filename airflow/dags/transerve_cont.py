@@ -41,8 +41,8 @@ cpu = 30*3
     doc_md=__doc__
 )
 def costs_predict():
-    costs_predict = SparkSubmitOperator(
-        task_id='spark_submit_job',
+    legs_costs_predict = SparkSubmitOperator(
+        task_id='legs_costs_predict',
         application='dags/spark_app/legs_cost_predict.py',
         #conn_id='spark_master',
         conn_id='spark',
@@ -63,6 +63,6 @@ def costs_predict():
 
 
 
-    update_legs_costs_result >> costs_predict
+    update_legs_costs_result >> legs_costs_predict
 
 costs_predict()
