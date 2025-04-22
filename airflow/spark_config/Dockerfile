@@ -23,3 +23,5 @@ USER root
 RUN pip install --upgrade pip
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
+# # for kubernetes work only copy, volumes in spark-master works for docker-compose only
+# COPY ../tools ./tools
