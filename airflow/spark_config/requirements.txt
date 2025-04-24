@@ -25,5 +25,6 @@ streamlit==1.42.2
 streamlit-authenticator==0.4.1
 # upgrade boto3 to version more than 1.35.99 will cause error for upload data to s3
 boto3==1.35.99
+ipython==9.1.0
 xlsxwriter
 category-encoders

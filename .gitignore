@@ -3,3 +3,4 @@ files/
 .vscode/
 *logs/
 *__pycache__/
+*tmp/

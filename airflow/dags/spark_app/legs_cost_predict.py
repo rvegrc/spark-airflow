@@ -119,20 +119,26 @@ def run():
     # Get the parent directory
     parent_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
 
-    # Add parent directory to sys.path
-    sys.path.append(parent_dir)
+    # find tools in parent dir
+    if os.path.isdir(os.path.join(parent_dir, 'tools')):
+        # Add parent directory to sys.path if found
+        sys.path.append(parent_dir)
+     
+    else:
+        # for run in spark
+        parent_dir = os.path.abspath(os.path.join(os.getcwd(), "../airflow/airflow_data"))
+        
+        # Add parent directory to sys.path
+        sys.path.append(parent_dir)
 
 
     from tools import pd_tools, db_tools, paths
+    from tools.paths import Paths
     from tools.db_tools import DbTools
-    from custom_transformers import SafePowerTransformer
+    from tools.custom_transformers import SafePowerTransformer
 
-    db_tools = DbTools(data_path, tmp_path, client)
-
-    
     # import paths
-    from paths import Paths
-    root_path = '.' # for local folder
+    root_path = f'{parent_dir}' # for local folder
     paths = Paths(root_path)
     data_path = paths.data_path
     tmp_path = paths.tmp_path
@@ -141,7 +147,11 @@ def run():
     prod_db = paths.prod_db
     dev_db = paths.dev_db
 
+    print(f'tmp_path={tmp_path}')
 
+    print(f'pwd={os.getcwd()}')
+
+    db_tools = DbTools(data_path, tmp_path, client)
 
     ## Load data from db
 
@@ -308,8 +318,8 @@ def run():
         params = {
             'random_state': RAND_ST
             ,'cat_features': ['remainder__' + col for col in cat_cols_checked]
-            ,'n_estimators': 1000 # 500
-            ,'depth':10 # 16
+            ,'n_estimators': 100 # 500
+            ,'depth':6 # 16
             ,'use_best_model': True
             ,'loss_function': 'RMSE'
             # ,f'custom_metric': ['RMSE' # metric for best iteration
