@@ -132,7 +132,7 @@ def run():
         sys.path.append(parent_dir)
 
 
-    from tools import pd_tools, db_tools, paths
+    from tools import pd_tools
     from tools.paths import Paths
     from tools.db_tools import DbTools
     from tools.custom_transformers import SafePowerTransformer
