@@ -147,10 +147,6 @@ def run():
     prod_db = paths.prod_db
     dev_db = paths.dev_db
 
-    print(f'tmp_path={tmp_path}')
-
-    print(f'pwd={os.getcwd()}')
-
     db_tools = DbTools(data_path, tmp_path, client)
 
     ## Load data from db
