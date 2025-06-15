@@ -40,5 +40,5 @@ ipython==9.1.0
 xlsxwriter
 category-encoders
 psycopg2-binary==2.9.10
-SQLAlchemy==2.0.41
+SQLAlchemy==1.4.54
 
