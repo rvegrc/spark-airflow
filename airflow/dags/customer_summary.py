@@ -7,6 +7,8 @@ from datetime import timedelta
 from airflow.decorators import dag, task
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import subprocess
+
 
 POSTGRES_USER = os.getenv('POSTGRES_USER')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
@@ -17,6 +19,9 @@ POSTGRES_PORT = os.getenv('POSTGRES_PORT')
 # Подключение к базе данных PostgreSQL
 engine = create_engine(f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}')
 
+path_to_data = '/opt/airflow/airflow_data/de_market/data'
+
+
 default_args={
     "owner": "rvegrc",
     "depends_on_past": True,                
@@ -25,57 +30,49 @@ default_args={
     "retries": 0
 }
 
+# from spark_app.orders_agg import load_orders_from_csv
+
+# def list_files():
+#     result = subprocess.run(['ls', '-l', path_to_data], capture_output=True, text=True)
+#     print(result.stdout)
+
 @dag(
     tags=["agg", "edu", "postgres", 'shop'],
     schedule="@daily"
     ,start_date=datetime(2025, 6, 6)
     ,catchup=False
 )
+
+
 def etl_orders_pipeline():
-    load_orders_task = PythonOperator(...)
-    load_order_items_task = PythonOperator(...)
-    build_summary_task = PythonOperator(...)
-    
-    load_orders_task >> load_order_items_task >> build_summary_task
+    def load_orders_from_csv() -> None:
+        """
+        Загружает данные заказов из CSV файла в таблицу orders в БД PostgreSQL.
+        Параметры:
+        - path_to_csv: Путь к CSV файлу с данными заказов.
+        - engine: объект SQLAlchemy для подключения к базе данных
+        """
 
-etl_orders_pipeline()
-        # @task
-    # def load_orders():
-    #     # Загрузка данных из CSV в DataFrame
-    #     df = pd.read_csv('/opt/airflow/airflow_data/orders.csv')
-    #     # Запись данных в таблицу orders
-    #     df.to_sql('orders', con=engine, if_exists='replace', index=False)
-    #     print("Orders loaded successfully.")
+        # Считываем данные из CSV
+        orders_new = pd.read_csv(f'{path_to_data}/orders_new.csv')
 
-    # @task
-    # def load_order_items():
-    #     # Загрузка данных из CSV в DataFrame
-    #     df = pd.read_csv('/opt/airflow/airflow_data/order_items.csv')
-    #     # Запись данных в таблицу order_items
-    #     df.to_sql('order_items', con=engine, if_exists='replace', index=False)
-    #     print("Order items loaded successfully.")
+        # Считываем данные из таблиц customers и orders
+        orders_ids = pd.read_sql_query('SELECT order_id from orders', con=engine.connect())
+        customers_ids = pd.read_sql_query('SELECT customer_id from customers', con=engine.connect())
 
-    # @task
-    # def build_summary():
-    #     # Выполнение SQL-запроса для создания сводной таблицы
-    #     with engine.connect() as connection:
-    #         result = connection.execute("""
-    #             CREATE TABLE IF NOT EXISTS order_summary AS
-    #             SELECT o.order_id, SUM(oi.quantity * oi.price) AS total_amount
-    #             FROM orders o
-    #             JOIN order_items oi ON o.order_id = oi.order_id
-    #             GROUP BY o.order_id;
-    #         """)
-    #         print("Order summary built successfully.")
+        print(orders_ids)
 
-    # load_orders() >> load_order_items() >> build_summary()
+    load_orders_task = PythonOperator(
+        task_id='load_orders',
+        python_callable=load_orders_from_csv
+    )
 
-
-# def etl_orders_pipeline():
-#     load_orders_task = PythonOperator(
-
+    load_orders_task
 
 
     # load_order_items_task = PythonOperator(...)
     # build_summary_task = PythonOperator(...)
+   
     # load_orders_task >> load_order_items_task >> build_summary_task
+
+etl_orders_pipeline()
