@@ -12,8 +12,10 @@ airflow-clickhouse-plugin[common.sql]
 clickhouse-cityhash 
 lz4
 apache-airflow-providers-apache-spark==4.11.3
-# apache-airflow-providers-common-compat==1.2.2 # old version for 2.5.0
-apache-airflow-providers-common-compat==1.6.0
+# old version for 2.10.3
+apache-airflow-providers-common-compat==1.2.2
+# for 3.0.2 version
+# apache-airflow-providers-common-compat==1.6.0 
 pandas==2.2.3
 # pydantic==2.10.6 old version for 2.5.0
 pydantic==2.11.7

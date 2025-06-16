@@ -2,6 +2,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
+import psycopg2
 import sys
 from datetime import timedelta
 from airflow.decorators import dag, task
@@ -15,7 +16,18 @@ POSTGRES_HOST = os.getenv('POSTGRES_HOST')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT')
 
 # Подключение к базе данных PostgreSQL
-engine = create_engine(f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}')
+def open_conn():
+    '''Открытие подключения к БД в случае его разрыва'''
+    return psycopg2.connect(
+        dbname=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD,
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT
+    )
+
+# Создание подключения
+conn = open_conn()
 
 default_args={
     "owner": "rvegrc",
@@ -36,13 +48,18 @@ def postgres_test():
     @task
     def test_connection():
         try:
-            with engine.connect() as connection:
-                result = connection.execute("SELECT 1")
-                print("Connection successful:", result.fetchone())
+            cur = conn.cursor()
+            cur.execute("SELECT 1;")
+            result = cur.fetchone()
+            cur.close()
+            if result[0] == 1:
+                print("Connection to PostgreSQL is successful.")
+            else:
+                print("Connection to PostgreSQL failed.")
         except Exception as e:
-            print("Connection failed:", e)
+            print(f"An error occurred: {e}")
             sys.exit(1)
-
+    
     test_connection()
 
 postgres_test()
