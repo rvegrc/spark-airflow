@@ -26,7 +26,7 @@ def open_conn():
         port=POSTGRES_PORT
     )
 
-from spark_app.load_orders import load_orders_from_csv      
+from spark_app.orders_agg import load_orders_from_csv, load_items_from_csv, customer_summary_to_db     
 
 
 # Создание подключения
@@ -47,17 +47,41 @@ default_args={
     ,catchup=False
 )
 
+
 def etl_orders_pipeline():
+    path_to_csv = '/opt/airflow/airflow_data/de_market/data'
+    
     load_orders_task = PythonOperator(
         task_id='load_orders_from_csv',
         python_callable=load_orders_from_csv,
         op_kwargs={
-            'path_to_csv': '/opt/airflow/airflow_data/orders.csv',
+            'path_to_csv': f'{path_to_csv}/orders_new.csv',
             'cur': conn.cursor()
         }
     )
 
-    load_orders_task
+    load_order_items_task = PythonOperator(
+        task_id='load_order_items_from_csv',
+        python_callable=load_items_from_csv,
+        op_kwargs={
+            'path_to_csv': f'{path_to_csv}/order_items_new.csv',
+            'cur': conn.cursor()
+        }
+    )
+
+    customer_summary_to_db_task = PythonOperator(
+        task_id='customer_summary_to_db_task',
+        python_callable=customer_summary_to_db,
+        op_kwargs={
+            'cur': conn.cursor()            
+        }        
+    )
+
+
+    load_orders_task >> load_order_items_task >> customer_summary_to_db_task
+
     load_orders_task.doc_md = __doc__
+    load_order_items_task.doc_md = __doc__
+    customer_summary_to_db_task.doc_md = __doc__
 
 etl_orders_pipeline()
