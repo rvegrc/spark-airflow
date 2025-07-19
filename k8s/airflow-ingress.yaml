@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airflow-web
+  namespace: airflow
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: airflow-web-ip
+    kubernetes.io/ingress.class: "gce"
+    cert-manager.io/cluster-issuer: "letsencrypt-http"
+    # you can keep your BackendConfig/IAP annotations here
+spec:
+  tls:
+  - hosts: ["airflow.example.com"]
+    secretName: airflow-tls          # managed by cert-manager!
+  rules:
+  - host: airflow.smalch.com
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: my-web-app
+            port:
+              number: 80
+

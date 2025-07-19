@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airflow-web
+  namespace: airflow
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: airflow-web-ip
+spec:
+  defaultBackend:
+    service:
+      name: my-web-app
+      port:
+        number: 80

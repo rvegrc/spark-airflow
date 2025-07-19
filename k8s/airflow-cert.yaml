@@ -1,0 +1,16 @@
+# airflow-cert.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: airflow-tls
+  namespace: airflow
+spec:
+  secretName: airflow-tls                 # <-- the secret Ingress will use
+  issuerRef:
+    name: letsencrypt-http
+    kind: ClusterIssuer
+  commonName: airflow.example.com  # e.g. airflow.example.com
+  dnsNames:
+  - airflow.example.com  # e.g. airflow.example.com
+  # optional: renew earlier than default 30 d
+  renewBefore: 720h   # 30d

@@ -1,0 +1,34 @@
+executor: KubernetesExecutor
+
+dags:
+  gitSync:
+    enabled: true
+    repo: "git@gitlab.com:you_repo.git"
+    branch: main
+    rev: HEAD
+    depth: 1
+    subPath: ""
+    sshKeySecret: git-sync-ssh
+    resources: {}
+
+webserver:
+  startupProbe:
+    initialDelaySeconds: 300
+    failureThreshold: 30
+  livenessProbe:
+    initialDelaySeconds: 300
+  readinessProbe:
+    initialDelaySeconds: 300
+
+ingress:
+  web:                       # 👈  NEW level!
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/proxy-body-size: "256m"
+    hosts:
+      - airflow.example.com
+    tls:
+      enabled: true          # toggles TLS in the template
+      secretName: airflow-tls
